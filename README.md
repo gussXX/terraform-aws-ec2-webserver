@@ -6,7 +6,7 @@
 - Configurar security group para permitir SSH e HTTP.
 - Output do IP público da VM.
 <br>
----
+
 
 ### Passos iniciais
 
