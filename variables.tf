@@ -16,8 +16,8 @@ variable "vpc_id" {
 }
 // === INGRESS =============================================
 variable "ingress_rules" {
-  description = "Lista de regras de ingress para o SG"
-  type = list(object({
+  description = "Regras de ingress para o SG"
+  type = map(object({
     from_port   = number
     to_port     = number
     protocol    = string
@@ -26,5 +26,18 @@ variable "ingress_rules" {
   }))
 }
 // === INGRESS =============================================
+
+// === EGRESS ==============================================
+variable "egress_rules" {
+  description = "Lista de regras de egress para o SG"
+  type = map(object({
+    ip_protocol = string
+    from_port   = number
+    to_port     = number
+    cidr_ipv4   = string
+    description = string
+  }))
+}
+// === EGRESS ==============================================
 
 // === SECURITY GROUP ======================================

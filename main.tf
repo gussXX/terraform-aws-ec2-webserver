@@ -20,7 +20,7 @@ resource "aws_instance" "instance_ec2" {
 
   vpc_security_group_ids = [aws_security_group.security_group_configs.id]
 
-  user_data = file("./files/user_data.sh") # Opcional: instalar Apache, etc.
+  user_data = file("./files/user_data.sh")
 
   tags = {
     Name = "Terraform-WebServer"
@@ -30,6 +30,9 @@ resource "aws_instance" "instance_ec2" {
 
 // === SECURITY GROUP ======================================
 resource "aws_security_group" "security_group_configs" {
+
+ revoke_rules_on_delete = true
+
   name        = "allow_tls"
   description = "Allow TLS inbound traffic and all outbound traffic"
   vpc_id      = var.vpc_id
@@ -41,12 +44,8 @@ resource "aws_security_group" "security_group_configs" {
 
 // === INGRESS =============================================
 resource "aws_vpc_security_group_ingress_rule" "ingress" {
-
-  for_each = {
-    for idx, rule in var.ingress_rules :
-    "${idx}" => rule
-  }
-
+  
+  for_each = var.ingress_rules
   security_group_id = aws_security_group.security_group_configs.id
 
   cidr_ipv4   = each.value.cidr_blocks
@@ -55,14 +54,18 @@ resource "aws_vpc_security_group_ingress_rule" "ingress" {
   to_port     = each.value.to_port
 }
 // === INGRESS =============================================
+
 // === EGRESS ==============================================
 resource "aws_vpc_security_group_egress_rule" "egress" {
-  security_group_id = aws_security_group.security_group_configs.id
 
-  cidr_ipv4   = "10.0.0.0/8"
-  from_port   = 0
-  ip_protocol = "tcp"
-  to_port     = 0
+  for_each = var.egress_rules
+  security_group_id = aws_security_group.security_group_configs.id
+  
+  ip_protocol = each.value.ip_protocol
+  from_port   = each.value.from_port
+  to_port     = each.value.to_port
+  cidr_ipv4   = each.value.cidr_ipv4
 }
 // === EGRESS ==============================================
+
 // === SECURITY GROUP ======================================
