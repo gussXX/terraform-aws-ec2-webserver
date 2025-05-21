@@ -7,6 +7,11 @@
 - Output do IP público da VM.
 <br>
 
+### Diagrama do Projeto
+  
+  <p align="center">
+      <img align="center" src="./imgs/diagrama-v1.png" height="auto" width="auto" />
+  </p>
 
 ### Passos iniciais
 
