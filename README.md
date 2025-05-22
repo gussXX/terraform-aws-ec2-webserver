@@ -43,3 +43,25 @@
 Devemos iniciar o projeto como o comando:
 
     terraform init
+
+Validando o plano da infraestrutura que sera cria:
+
+    terraform plan
+
+Permitir a aplicação da infraestrutura:
+
+    terraform apply
+
+
+### Observações
+
+Esse projeto foi construido localmente utilizando o Localstack, em sua versão 4.2.0.
+
+Instalar o localstack, clicando [aqui](https://docs.localstack.cloud/getting-started/installation/).
+
+    curl --output localstack-cli-4.4.0-linux-amd64-onefile.tar.gz \
+    --location https://github.com/localstack/localstack-cli/releases/download/v4.4.0/localstack-cli-4.4.0-linux-amd64-onefile.tar.gz
+
+Após a instalação:
+
+    localstack --version
